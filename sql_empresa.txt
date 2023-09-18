@@ -1,0 +1,55 @@
+create database empresa;
+use empresa;
+
+create table cliente(
+	id_cliente int not null AUTO_INCREMENT primary key,
+	nome varchar(10) not null,
+	sobrenome varchar(10) not null,
+	email varchar(191) not null,
+	telefone varchar(11) not null
+);
+
+create table propriedades(
+	id_propriedades int not null AUTO_INCREMENT primary key,
+	id_cliente int not null,
+	endereco varchar(50) not null,
+	area int(3) not null,
+	numero_quartos int(100) not null,
+	preco decimal(6.2) not null, 
+
+	foreign key (id_cliente) REFERENCES cliente(id_cliente)
+);
+
+
+create table corretor (
+	id_corretor int not null AUTO_INCREMENT primary key,
+	nome varchar(10) not null,
+	sobrenome varchar(10) not null,
+	email varchar(191) not null,
+	telefone varchar(11) not null
+);
+
+create table contrato (
+	id_contrato int not null AUTO_INCREMENT primary key,
+	id_propriedades int not null,
+	id_corretor int not null,
+	data_inicio date not null,
+	data_termino varchar(40) not null,
+	valor_contrato decimal(6.2) not null,
+
+	foreign key(id_propriedades) 
+	REFERENCES propriedades (id_propriedades),
+
+	foreign key(id_corretor) 
+	REFERENCES corretor (id_corretor)
+);
+
+create table pagamento (
+	id_pagamento int not null AUTO_INCREMENT primary key,
+	id_contrato int not null,
+	data_pagamento date not null,
+	valor_pago varchar(6.2) not null, 
+
+	foreign key(id_contrato) 
+	REFERENCES contrato (id_contrato)
+);
